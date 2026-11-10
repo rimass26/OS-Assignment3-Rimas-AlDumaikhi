@@ -266,7 +266,7 @@ All four verification checks passed in every run.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I learned that synchronization helps threads work together without making mistakes. When I ran the original code, some results were wrong because several CPUs used the same data. This problem is called a race condition. I used ReentrantLock to protect the ready queue and the shared counters. I also used a Semaphore to make CPUs wait instead of checking the queue many times. After the changes, I ran the program five times, and all the results were correct.
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -274,7 +274,7 @@ All four verification checks passed in every run.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The hardest part for me was working with GitHub and VS Code. At first, I had some problems opening the project and saving my changes. I also had an error when I tried to make a commit in VS Code. Another problem happened when I closed the browser before saving my code. I had to check my previous work and add the changes again. This taught me to save my work after every important step.
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -282,7 +282,7 @@ All four verification checks passed in every run.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I solved the problems by working step by step. First, I ran the original code to see what was wrong. Then, I worked on each feature separately. I checked the locks, brackets, and code after every change. When I lost some changes, I used my previous code to add them again. Finally, I ran the program five times to make sure everything worked correctly.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -290,7 +290,7 @@ All four verification checks passed in every run.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is used in many real-life systems. For example, banks use it when many people make transactions at the same time. It helps prevent mistakes when updating account balances. It is also useful in ticket-booking systems so two people cannot book the same seat. Operating systems use synchronization when different processes share resources. These examples are similar to my project because several CPUs share the same ready queue.
 
 ### Optional: What would you like to learn more about?
 
@@ -324,7 +324,7 @@ All four verification checks passed in every run.
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+In my original program, some results were incorrect because the CPUs shared data without locks. The context-switch count was 15 instead of 17, and only 9 out of 10 processes were counted as completed. The busy-waiting counter was 427, and the program showed a watchdog warning. A race condition happens when two threads read and update the same value at the same time. This can also happen in real computers because threads may run in different orders, so the problem does not always appear.
 
 Verification block of the **original starter**:
 ```
