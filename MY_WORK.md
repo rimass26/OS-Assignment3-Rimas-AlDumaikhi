@@ -32,11 +32,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | Rimas AlDumaikhi  |
+| **Student ID** | 445052097 |
+| **University Email** | 445052097@std.psau.edu.sa |
+| **GitHub Username** | rimass26 |
+| **Repository Link** | https://github.com/rimass26/OS-Assignment3-Rimas-AlDumaikhi |
  
 ---
 
@@ -132,68 +132,94 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - November 10, 2026, 4:00 PM
+**What I did**: Created my assignment repository and personalized the Java program.
 
 **Details**:
+Forked the original assignment repository on GitHub.
+Renamed the repository to OS-Assignment3-Rimas-AlDumaikhi.
+Changed the student ID to 445052097.
+Cloned the repository and opened it in Visual Studio Code.
 
-**Challenges**:
+**Challenges**: I initially had difficulty opening the repository in VS Code and using the Git Clone command.
 
-**Solution**:
+**Solution**: I checked the VS Code settings, opened the repository through Git Clone, and confirmed that all project files were available.
 
-**Time spent**:
+**Time spent**:  Approximately 45 minutes (estimated).
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - November 10, 2026, 6:10 PM
+**What I did**: Ran the original program and identified synchronization problems.
 
 **Details**:
+Executed the original SchedulerSimulationSync.java program.
+Examined the verification results.
+The expected number of context switches was 17, but only 15 were recorded.
+The program completed 9 out of 10 processes.
+The busy-waiting counter reached 427.
+The watchdog reported that the simulation did not finish correctly.
 
-**Challenges**:
+**Challenges**: The program produced incorrect values because several CPU threads accessed shared data at the same time.
 
-**Solution**:
+**Solution**: I examined the ReadyQueue and SharedStats classes to understand where synchronization was missing.
 
-**Time spent**:
+**Time spent**:  Approximately 30 minutes (estimated).
 
 ---
 
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 3 - November 10, 2026, 7:00 PM
+**What I did**: Implemented Feature 1, protecting the shared ready queue.
 
 **Details**:
+Imported ReentrantLock.
+Declared queueLock inside ReadyQueue.
+Protected add(), poll(), processOf(), and snapshot().
+Used try/finally to release the lock safely.
+Ran the program to check the changes.
 
-**Challenges**:
+**Challenges**: I needed to make sure the lock protected every operation on the shared list and map without removing important parts of the original code.
 
-**Solution**:
+**Solution**: I updated the methods individually and checked their brackets and lock placement. I then tested the updated program.
 
-**Time spent**:
+**Time spent**: Approximately 45 minutes (estimated).
 
 ---
 
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 4 - November 10, 2026, 10:55 PM
+**What I did**: Implemented Feature 2 using a shared statistics lock.
 
 **Details**:
+Declared one ReentrantLock called statsLock inside SharedStats.
+Protected incrementContextSwitch(), incrementCompletedProcess(), and addServiceTime().
+Protected the three getter methods with the same lock.
+Kept RaceWindow.pause() unchanged.
+Used GitHub to save the changes with a separate Feature 2 commit.
 
-**Challenges**:
+**Challenges**: I accidentally closed the browser during editing, and the unsaved changes were lost.
 
-**Solution**:
+**Solution**: I restored the changes using the previously reviewed code and saved the completed version directly on GitHub.
 
-**Time spent**:
+**Time spent**: Approximately 30 minutes (estimated).
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 5 - November 10, 2026, 11:30 PM
+**What I did**: Implemented Feature 3 and tested the final synchronization solution.
 
 **Details**:
+Imported Semaphore and declared availableProcesses with an initial value of 0.
+Added release() when a process enters the ready queue.
+Replaced the busy-waiting loop with acquire().
+Added wakeAllCPUs() to allow the CPU threads to terminate correctly.
+Ran the completed program five times in VS Code.
+All four verification checks passed in every run.
 
-**Challenges**:
+**Challenges**: The CPU threads needed a way to stop waiting after the last process had finished.
 
-**Solution**:
+**Solution**: I used release(SharedStats.totalCPUs) to wake the waiting CPUs and added a completion check so they could exit.
 
-**Time spent**:
+**Time spent**: Approximately 30 minutes (estimated).
 
 ---
 
@@ -214,13 +240,13 @@
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: [5 hours]
 
-**Most challenging part**:
+**Most challenging part**: Keeping the project changes organized between GitHub and VS Code while implementing the synchronization features correctly.
 
-**Most interesting learning**:
+**Most interesting learning**: Understanding how locks and semaphores allow multiple CPUs to use shared resources safely.
 
-**What I would do differently next time**:
+**What I would do differently next time**: I would save and commit my work more frequently and review the code after each modification.
 
 ---
 
