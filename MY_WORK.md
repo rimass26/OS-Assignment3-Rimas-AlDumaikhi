@@ -264,15 +264,14 @@ All four verification checks passed in every run.
 
 > 💡 **TIP:** Talk about race conditions (read-modify-write), critical sections, mutual exclusion with `ReentrantLock` and `try/finally`, the role of a counting semaphore, and what surprised you when the starter failed.
 
-**Your Answer:** *(5-7 sentences)*
-
+**Your Answer:** 
 I learned that synchronization helps threads work together without making mistakes. When I ran the original code, some results were wrong because several CPUs used the same data. This problem is called a race condition. I used ReentrantLock to protect the ready queue and the shared counters. I also used a Semaphore to make CPUs wait instead of checking the queue many times. After the changes, I ran the program five times, and all the results were correct.
 
 ## Question 2: What was the most challenging part of this assignment?
 
 > 💡 **TIP:** Pick **one** specific challenge (understanding why the starter failed, choosing the lock granularity, the initial value of the semaphore, the shutdown of the CPUs, Git, the video) and say *why* it was hard.
 
-**Your Answer:** *(5-7 sentences)*
+**Your Answer:** 
 
 The hardest part for me was working with GitHub and VS Code. At first, I had some problems opening the project and saving my changes. I also had an error when I tried to make a commit in VS Code. Another problem happened when I closed the browser before saving my code. I had to check my previous work and add the changes again. This taught me to save my work after every important step.
 
@@ -280,7 +279,7 @@ The hardest part for me was working with GitHub and VS Code. At first, I had som
 
 > 💡 **TIP:** Describe your method: reading the slides and the documentation, adding `System.out.println` to debug, running the program many times, re-reading the README, testing after each small change, asking for help.
 
-**Your Answer:** *(5-7 sentences)*
+**Your Answer:** 
 
 I solved the problems by working step by step. First, I ran the original code to see what was wrong. Then, I worked on each feature separately. I checked the locks, brackets, and code after every change. When I lost some changes, I used my previous code to add them again. Finally, I ran the program five times to make sure everything worked correctly.
 
@@ -288,7 +287,7 @@ I solved the problems by working step by step. First, I ran the original code to
 
 > 💡 **TIP:** Use real applications you know (banking and money transfers, ticket or seat booking, a shared counter on a website, a print queue, a database) and connect each one to what you built here (shared data, critical section, lock or semaphore).
 
-**Your Answer:** *(5-7 sentences)*
+**Your Answer:** 
 
 Synchronization is used in many real-life systems. For example, banks use it when many people make transactions at the same time. It helps prevent mistakes when updating account balances. It is also useful in ticket-booking systems so two people cannot book the same seat. Operating systems use synchronization when different processes share resources. These examples are similar to my project because several CPUs share the same ready queue.
 
@@ -423,58 +422,65 @@ This assignment is similar to the Producer-Consumer Problem because processes ar
 
 If a producer takes the mutex first while the queue is full, it may wait for an empty space. The consumer cannot remove a process because the producer is holding the mutex. Both threads may stay blocked. To avoid this, the producer should wait for an empty slot before taking the mutex. This prevents the hold-and-wait condition.
 
+
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+
+1. I learned how race conditions happen when threads use shared data at the same time.
+2. I learned how to use ReentrantLock to protect shared data.
+3. I learned how Semaphore helps CPUs wait without busy waiting.
 
 **Concepts I need to study more:**
-1.
-2.
+
+1. Deadlock and how to prevent it.
+2. Fair and non-fair locks.
 
 ---
 
-# ✅ Final Checklist (complete before submitting)
-
-> ⚠️ **WARNING:** Go through every line. Blackboard does not accept submissions after the deadline, which is **November 14, 2026**.
+# Final Checklist (complete before submitting)
 
 **Repository**
-- [ ] Repository is **PUBLIC** (Settings → Danger Zone → Visibility)
-- [ ] Repository is renamed to `OS-Assignment3-YourFirstName-YourLastName`
-- [ ] GitHub account uses the university email (`@std.psau.edu.sa`)
+- [x] Repository is PUBLIC.
+- [x] Repository is renamed to `OS-Assignment3-Rimas-AlDumaikhi`.
+- [x] GitHub account uses the university email (`@std.psau.edu.sa`).
 
 **Code**
-- [ ] Student ID is set in `SchedulerSimulationSync.java` (line 304)
-- [ ] My code is based **only** on the starter of this repository (nothing copied from previous assignments)
-- [ ] Code compiles and runs with no errors, and terminates by itself (no `⛔ WATCHDOG`)
-- [ ] Feature 1 (ready queue lock), Feature 2 (statistics locks) and Feature 3 (semaphore, no busy waiting) all work
-- [ ] **The four verification lines are ✔ in 5 consecutive runs**
-- [ ] Every lock is released in a `finally` block
-- [ ] `RaceWindow`, `Config`, the verification block and the watchdog are **unchanged**
-- [ ] Each feature has clear comments
+- [x] Student ID is set in `SchedulerSimulationSync.java`.
+- [x] My code is based only on the starter of this repository.
+- [x] Code compiles and runs without errors or WATCHDOG.
+- [x] Feature 1, Feature 2, and Feature 3 work correctly.
+- [x] All four verification checks passed in 5 consecutive runs.
+- [x] Every ReentrantLock is released in a finally block.
+- [x] RaceWindow, Config, verification, and watchdog are unchanged.
+- [x] Each feature has comments explaining the changes.
 
 **Commits**
-- [ ] **At least 4 meaningful commits, ideally 7 or more**
-- [ ] **One commit per feature**
-- [ ] Commits are spread over **different dates** (not all in the last hour)
-- [ ] Everything is **pushed** to GitHub
+- [x] At least 4 meaningful commits were made.
+- [x] Each feature has its own commit.
+- [x] Commits are spread over different dates.
+- [x] The completed code changes are saved on GitHub.
 
-**This file (`MY_WORK.md`)**
-- [ ] Full name and student ID filled in at the top
-- [ ] Development log has **5+ entries** on different dates
-- [ ] Reflection: 4 questions, 5-7 sentences each
-- [ ] Technical answers: 4 questions, 3-5 sentences each, with examples from **your** output (starter output **and** final output pasted in Question 1)
-- [ ] No `[...]` placeholders left
-- [ ] No section headers deleted
+**This file (MY_WORK.md)**
+- [x] Full name, student ID, and university email are confirmed.
+- [x] Development Log has at least 5 entries across different dates.
+- [x] Reflection has 4 answers with 5-7 sentences each.
+- [x] Technical Answers has 4 answers with 3-5 sentences each.
+- [x] Original and final verification results are included.
+- [x] No unanswered placeholders remain.
+- [x] All original section headers are kept.
 
 **Video**
-- [ ] 2-3 minutes long, named `StudentID_Assignment3_Demo.mp4`
-- [ ] Shows your name, ID, repository, 3 features (and your lock granularity choice), IDE execution with the verification block, one synchronization concept, and commit history
-- [ ] Link is **public** (tested in an incognito window) and pasted in the **Video Link** section above
+- [ ] Video is 2-3 minutes long.
+- [ ] Video is named `445052097_Assignment3_Demo.mp4`.
+- [ ] Video shows my name, student ID, repository, and 3 features.
+- [ ] Video explains my lock choice and one synchronization concept.
+- [ ] Video shows the successful IDE run and commit history.
+- [ ] Video is uploaded and accessible to anyone with the link.
+- [ ] Video link is added to MY_WORK.md.
 
 **Blackboard**
-- [ ] Submit **only** the link to your public GitHub repository
+- [x] Submit only the public GitHub repository link.
+
 
 > 🎯 **Good luck!** Start early, commit regularly, and make sure you can explain every line you submit.
