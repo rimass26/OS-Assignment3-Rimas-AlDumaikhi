@@ -322,22 +322,42 @@ Synchronization is used in many real-life systems. For example, banks use it whe
 >
 > 💡 **TIP:** Use a small timeline: *CPU-1 reads `contextSwitchCount` = 12 → CPU-2 reads 12 → CPU-1 writes 13 → CPU-2 writes 13 → one increment is lost.* If your starter run crashed before printing numbers, run it several times (or paste the exception and the watchdog message and explain it).
 
-**Your Answer:** *(3-5 sentences)*
 
-In my original program, some results were incorrect because the CPUs shared data without locks. The context-switch count was 15 instead of 17, and only 9 out of 10 processes were counted as completed. The busy-waiting counter was 427, and the program showed a watchdog warning. A race condition happens when two threads read and update the same value at the same time. This can also happen in real computers because threads may run in different orders, so the problem does not always appear.
+**Your Answer:**
 
-Verification block of the **original starter**:
-```
-[Paste the verification block (or the exception/watchdog message) of the starter here]
+In my original program, some results were wrong because the CPUs shared data without locks. The context-switch count was 15 instead of 17, and only 9 out of 10 processes were counted as completed. The busy-waiting counter was 427, and the program showed a watchdog warning. A race condition happens when two threads read and update the same value at the same time. This can also happen on real computers because threads run in different orders, so the problem is sometimes hard to detect.
+
+**Verification block of the original starter:**
+
+```text
+VERIFICATION (expected values are computed from YOUR seed)
+
+Context switches (quanta executed)  expected 17     observed 15     MISMATCH
+Completed processes                 expected 10     observed 9      MISMATCH
+Total service time (ms)             expected 47064  observed 40306  MISMATCH
+Busy-waiting polls (must be 0)      expected 0      observed 427    MISMATCH
+
+At least one check failed.
+WATCHDOG: The simulation did not finish (22 s).
 ```
 
-Verification block of **my final version**:
-```
-[Paste the verification block of your final version here (all lines ✔)]
+**Verification block of my final version:**
+
+```text
+VERIFICATION (expected values are computed from YOUR seed)
+
+Context switches (quanta executed)  expected 17     observed 17     PASS
+Completed processes                 expected 10     observed 10     PASS
+Total service time (ms)             expected 47064  observed 47064  PASS
+Busy-waiting polls (must be 0)      expected 0      observed 0      PASS
+
+All shared values are consistent.
 ```
 
 **Explanation of the timeline:**
-[Explain the lost update step by step.]
+
+For example, CPU-1 reads contextSwitchCount = 12. Before it updates the value, CPU-2 also reads 12. Both threads may pause at RaceWindow.pause(). Then CPU-1 writes 13, and CPU-2 also writes 13. The correct result should be 14, but one update is lost.
+
 
 ## Question 2: Critical Sections and Lock Granularity
 
@@ -345,14 +365,22 @@ Verification block of **my final version**:
 
 > 💡 **TIP:** The three counters are independent: does updating `contextSwitchCount` need to block an update of `totalServiceTime`? Also think about what could go wrong (deadlock, or long waiting) if the queue lock and the statistics lock were the **same** lock and a thread held it while doing something slow.
 
-**Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+**Your Answer:**
+
+I used `queueLock` to protect the ready queue and `statsLock` to protect the shared counters. I chose one lock for all three counters because it was easier to manage, but it can make threads wait more than separate locks. I used a different lock for the queue so the CPUs can access the queue and statistics separately. The locks provide mutual exclusion, and keeping the protected code short helps threads make progress. However, the default `ReentrantLock` is not fair, so bounded waiting is not guaranteed and some threads may wait longer than others.
 
 | Critical section (variable / method) | Lock used | Why it needs protection |
 |---|---|---|
-| [e.g., `ReadyQueue.poll()`] | [lock name] | [reason] |
-| [...] | [...] | [...] |
+| `ReadyQueue.add()` | `queueLock` | Protects adding processes to the queue |
+| `ReadyQueue.poll()` | `queueLock` | Prevents two CPUs from taking the same process |
+| `ReadyQueue.processOf()` | `queueLock` | Protects reading the shared map |
+| `ReadyQueue.snapshot()` | `queueLock` | Protects reading the queue |
+| `incrementContextSwitch()` | `statsLock` | Prevents lost updates |
+| `incrementCompletedProcess()` | `statsLock` | Counts completed processes correctly |
+| `addServiceTime()` | `statsLock` | Protects the total service time |
+| Three statistics getter methods | `statsLock` | Protects reading the shared counters |
+
 
 ## Question 3: Busy Waiting vs Semaphore
 
@@ -360,9 +388,11 @@ Verification block of **my final version**:
 
 > 💡 **TIP:** Think about what a CPU does when the queue is empty in the starter, and what a CPU does in your final version (is it running, ready or blocked?). Also check what happens to a CPU blocked in `acquire()` when no process will ever be added again.
 
-**Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+**Your Answer:**
+
+In the original code, the CPUs kept checking the ready queue even when it was empty, and my first run showed 427 busy-waiting polls. I used a counting `Semaphore` starting at 0 because the queue was empty at the beginning. After adding the first 10 processes, the semaphore had 10 permits, one for each available process. The `release()` method adds a permit, while `acquire()` makes a CPU wait when no permit is available. When the last process finishes, `wakeAllCPUs()` releases permits for all CPUs so they can stop waiting and exit instead of staying blocked forever.
+
 
 ## Question 4: Classical Problems and Deadlock
 
@@ -370,16 +400,28 @@ Verification block of **my final version**:
 
 > 💡 **TIP:** Recall the bounded-buffer solution of the slides (`empty`, `full`, `mutex`) and the order of `wait()` calls in the producer and the consumer. For the deadlock, think about a producer that holds the mutex while waiting for a free slot that only a consumer (who needs the mutex) can create.
 
-**Your Answer:** *(3-5 sentences)*
 
-**Classical problem and roles**:
-[Name the problem; who is the producer, who is the consumer?]
+**Your Answer:**
 
-**Semaphores for a bounded queue (name and initial value)**:
-[Name the three semaphores and their initial values.]
+This assignment is similar to the Producer-Consumer Problem because processes are added to and removed from a shared queue. The main thread is a producer, while CPUs are consumers, but CPUs also become producers when they add unfinished processes again. If the queue had a maximum size of `K`, we would need three semaphores: `empty = K`, `full = 0`, and `mutex = 1`. A deadlock could happen if a producer held the mutex while waiting for an empty space, because the consumer would need the same mutex to remove a process. To prevent this, the thread should wait for an empty or full slot before taking the mutex, avoiding the hold-and-wait condition.
 
-**Deadlock scenario and prevention**:
-[Describe the scenario and the necessary condition you would break.]
+**Classical problem and roles:**
+
+- **Problem:** Producer-Consumer Problem.
+- **Producer:** The main thread and CPU workers when they add processes.
+- **Consumer:** CPU workers when they remove processes from the queue.
+
+**Semaphores for a bounded queue (name and initial value):**
+
+| Semaphore | Initial value | Purpose |
+|---|---|---|
+| `empty` | `K` | Counts empty spaces in the queue |
+| `full` | `0` | Counts available processes |
+| `mutex` | `1` | Protects access to the shared queue |
+
+**Deadlock scenario and prevention:**
+
+If a producer takes the mutex first while the queue is full, it may wait for an empty space. The consumer cannot remove a process because the producer is holding the mutex. Both threads may stay blocked. To avoid this, the producer should wait for an empty slot before taking the mutex. This prevents the hold-and-wait condition.
 
 ## Summary
 
