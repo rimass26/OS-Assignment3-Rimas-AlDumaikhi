@@ -145,7 +145,7 @@ Cloned the repository and opened it in Visual Studio Code.
 
 **Solution**: I checked the VS Code settings, opened the repository through Git Clone, and confirmed that all project files were available.
 
-**Time spent**:  Approximately 45 minutes (estimated).
+**Time spent**:  50 minutes.
 
 ---
 
@@ -164,7 +164,7 @@ The watchdog reported that the simulation did not finish correctly.
 
 **Solution**: I examined the ReadyQueue and SharedStats classes to understand where synchronization was missing.
 
-**Time spent**:  Approximately 30 minutes (estimated).
+**Time spent**:  30 minutes.
 
 ---
 
@@ -182,7 +182,7 @@ Ran the program to check the changes.
 
 **Solution**: I updated the methods individually and checked their brackets and lock placement. I then tested the updated program.
 
-**Time spent**: Approximately 45 minutes (estimated).
+**Time spent**: 45 minutes.
 
 ---
 
@@ -200,11 +200,11 @@ Used GitHub to save the changes with a separate Feature 2 commit.
 
 **Solution**: I restored the changes using the previously reviewed code and saved the completed version directly on GitHub.
 
-**Time spent**: Approximately 30 minutes (estimated).
+**Time spent**: 1 hour.
 
 ---
 
-### Entry 5 - November 10, 2026, 11:30 PM
+### Entry 5 - November 11, 2026, 11:30 AM
 **What I did**: Implemented Feature 3 and tested the final synchronization solution.
 
 **Details**:
@@ -219,20 +219,28 @@ All four verification checks passed in every run.
 
 **Solution**: I used release(SharedStats.totalCPUs) to wake the waiting CPUs and added a completion check so they could exit.
 
-**Time spent**: Approximately 30 minutes (estimated).
+**Time spent**: Approximately 50 minutes (estimated).
 
 ---
 
-### Entry 6 - [Optional - Date and Time]
-**What I did**:
 
-**Details**:
+### Entry 6 - November 11, 2026, 1:30 PM 
 
-**Challenges**:
+**What I did:** Completed the assignment documentation and reviewed my GitHub repository.
 
-**Solution**:
+**Details:**
+- Completed the four Reflection questions in Part B.
+- Answered the four Technical Questions in Part C.
+- Added the original and final verification results.
+- Completed the Summary and updated the Final Checklist.
+- Reviewed the repository files and commit history on GitHub.
+- Checked the assignment requirements to see what was still missing.
 
-**Time spent**:
+**Challenges:** I needed to make sure my answers were clear, and related to my actual code and results.
+
+**Solution:** I reviewed each answer, checked the verification numbers, and compared my work with the assignment instructions.
+
+**Time spent:** 1 hour.
 
 ---
 
@@ -240,7 +248,7 @@ All four verification checks passed in every run.
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [5 hours]
+**Total time spent on assignment**: [8 hours]
 
 **Most challenging part**: Keeping the project changes organized between GitHub and VS Code while implementing the synchronization features correctly.
 
